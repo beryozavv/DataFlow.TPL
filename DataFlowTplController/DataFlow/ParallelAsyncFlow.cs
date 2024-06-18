@@ -21,7 +21,6 @@ public class ParallelAsyncFlow
             return $"Operation: {number} ";
         }, new ExecutionDataflowBlockOptions
         {
-            BoundedCapacity = 8,
             EnsureOrdered = true,
             MaxDegreeOfParallelism = 4 // Process up to 4 messages in parallel
         });
@@ -33,7 +32,6 @@ public class ParallelAsyncFlow
             return $"Simple operation: {number} ";
         }, new ExecutionDataflowBlockOptions
         {
-            BoundedCapacity = 16,
             EnsureOrdered = true,
             MaxDegreeOfParallelism = 8 // Process up to 4 messages in parallel
         });
@@ -52,7 +50,7 @@ public class ParallelAsyncFlow
         
         var transformBlockSimple2 = new TransformBlock<string,string>(async text =>
         {
-            await Task.Delay(700); // Simulate async work
+            await Task.Delay(500); // Simulate async work
             return text;
         }, new ExecutionDataflowBlockOptions
         {
